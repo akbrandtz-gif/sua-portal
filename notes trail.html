@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SUA Learning Portal</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#f2f2f2;
+margin:0;
+text-align:center;
+}
+
+header{
+background:green;
+color:white;
+padding:20px;
+}
+
+.container{
+padding:30px;
+}
+
+button{
+padding:10px 20px;
+background:green;
+color:white;
+border:none;
+margin:10px;
+cursor:pointer;
+}
+
+input{
+padding:10px;
+margin:10px;
+width:200px;
+}
+
+.card{
+background:white;
+padding:20px;
+margin:20px auto;
+width:300px;
+box-shadow:0 2px 5px rgba(0,0,0,0.2);
+border-radius:10px;
+}
+
+.hidden{
+display:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h1>SUA Learning Portal</h1>
+<p>Lecture Notes & Assignments System</p>
+</header>
+
+<div class="container">
+
+<!-- LOGIN PAGE -->
+
+<div id="loginPage">
+
+<h2>Login</h2>
+
+<input id="email" placeholder="Email"><br>
+<input id="password" type="password" placeholder="Password"><br>
+
+<button onclick="login()">Login</button>
+
+</div>
+
+
+<!-- DASHBOARD -->
+
+<div id="dashboard" class="hidden">
+
+<h2>Dashboard</h2>
+
+<button onclick="showNotes()">Lecture Notes</button>
+<button onclick="showAssignments()">Assignments</button>
+<button onclick="logout()">Logout</button>
+
+</div>
+
+
+<!-- NOTES -->
+
+<div id="notesPage" class="hidden">
+
+<h2>Lecture Notes</h2>
+
+<div class="card">
+<h3>Introduction to Agriculture</h3>
+<button>Download PDF</button>
+</div>
+
+<div class="card">
+<h3>Soil Science</h3>
+<button>Download PDF</button>
+</div>
+
+<div class="card">
+<h3>Crop Production</h3>
+<button>Download PDF</button>
+</div>
+
+<button onclick="backDashboard()">Back</button>
+
+</div>
+
+
+<!-- ASSIGNMENTS -->
+
+<div id="assignmentPage" class="hidden">
+
+<h2>Assignments</h2>
+
+<div class="card">
+
+<h3>Assignment 1</h3>
+
+<p>Topic: Soil Fertility</p>
+<p>Deadline: 20 March</p>
+
+<input type="file">
+
+<button onclick="submitAssignment()">Submit</button>
+
+</div>
+
+<button onclick="backDashboard()">Back</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+function login(){
+
+let email=document.getElementById("email").value
+let password=document.getElementById("password").value
+
+if(email!="" && password!=""){
+
+document.getElementById("loginPage").classList.add("hidden")
+document.getElementById("dashboard").classList.remove("hidden")
+
+}
+
+else{
+
+alert("Please enter email and password")
+
+}
+
+}
+
+
+function logout(){
+
+location.reload()
+
+}
+
+
+function showNotes(){
+
+document.getElementById("dashboard").classList.add("hidden")
+document.getElementById("notesPage").classList.remove("hidden")
+
+}
+
+
+function showAssignments(){
+
+document.getElementById("dashboard").classList.add("hidden")
+document.getElementById("assignmentPage").classList.remove("hidden")
+
+}
+
+
+function backDashboard(){
+
+document.getElementById("notesPage").classList.add("hidden")
+document.getElementById("assignmentPage").classList.add("hidden")
+document.getElementById("dashboard").classList.remove("hidden")
+
+}
+
+
+function submitAssignment(){
+
+alert("Assignment Submitted Successfully")
+
+}
+
+</script>
+
+</body>
+</html>

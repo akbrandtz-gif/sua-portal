@@ -1,158 +1,272 @@
 <!DOCTYPE html>
-<html lang="sw">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SUA Learning Portal - Full System</title>
-    <style>
-        :root { --sua-green: #2e7d32; --sua-yellow: #fbc02d; --bg: #eef2f3; --blue: #1565c0; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; }
-        
-        header { 
-            background: var(--sua-green); color: white; padding: 15px; text-align: center; 
-            border-bottom: 4px solid var(--sua-yellow); position: relative;
-        }
+<title>SUA Learning Portal</title>
 
-        .notification-icon {
-            position: absolute; right: 20px; top: 25px; cursor: pointer; font-size: 20px;
-        }
+<style>
 
-        .container { padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        
-        /* Layouts */
-        .card { 
-            background: white; padding: 25px; border-radius: 15px; 
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1); width: 100%; max-width: 450px; 
-            text-align: center; margin-bottom: 20px; border-top: 5px solid var(--sua-green);
-        }
-        
-        .lecturer-card { border-top: 5px solid var(--blue); text-align: left; }
-        .student-card { border-top: 5px solid var(--sua-green); text-align: left; }
+body{
+font-family: Arial;
+background:#f2f2f2;
+margin:0;
+text-align:center;
+}
 
-        input, select, textarea { width: 92%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; }
-        
-        button { 
-            width: 100%; padding: 12px; background: var(--sua-green); color: white; 
-            border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s;
-        }
-        
-        .btn-blue { background: var(--blue); }
-        .btn-outline { background: none; color: #555; text-decoration: underline; font-size: 13px; width: auto; }
-        .btn-red { background: #d32f2f; margin-top: 15px; }
+header{
+background:green;
+color:white;
+padding:20px;
+}
 
-        .hidden { display: none; }
-        hr { border: 0; border-top: 1px solid #eee; margin: 20px 0; }
-        .badge { background: #f0f0f0; padding: 4px 8px; border-radius: 4px; font-size: 11px; text-transform: uppercase; }
-    </style>
+.container{
+padding:30px;
+}
+
+button{
+padding:10px 20px;
+background:green;
+color:white;
+border:none;
+margin:10px;
+cursor:pointer;
+}
+
+input,select{
+padding:10px;
+margin:10px;
+width:200px;
+}
+
+.card{
+background:white;
+padding:20px;
+margin:20px auto;
+width:300px;
+box-shadow:0 2px 5px rgba(0,0,0,0.2);
+border-radius:10px;
+}
+
+.hidden{
+display:none;
+}
+
+</style>
+
 </head>
+
 <body>
 
 <header>
-    <div class="notification-icon" onclick="alert('Una notification 2 mpya!')">🔔<span id="notifCount" style="background:red; color:white; border-radius:50%; padding:2px 6px; font-size:10px;">2</span></div>
-    <h1>SUA Learning Portal</h1>
-    <p id="topStatus">Karibu Chuo Kikuu cha Sokoine</p>
+<h1>SUA Learning Portal</h1>
+<p>Lecture Notes & Assignments System</p>
 </header>
 
 <div class="container">
 
-    <!-- 1. LOGIN PAGE -->
-    <div id="loginPage" class="card">
-        <h2>Ingia (Login)</h2>
-        <select id="loginRole">
-            <option value="student">Mwanafunzi (Student)</option>
-            <option value="lecturer">Mhadhiri (Lecturer)</option>
-        </select>
-        <input id="loginEmail" placeholder="Email / Registration No">
-        <input id="loginPass" type="password" placeholder="Nenosiri">
-        <button onclick="handleLogin()">Login</button>
-        <div style="margin-top:15px;">
-            <button class="btn-outline" onclick="showPage('forgotPage')">Umesahau Nenosiri?</button> | 
-            <button class="btn-outline" onclick="showPage('registerPage')">Jisajili Hapa</button>
-        </div>
-    </div>
+<!-- LOGIN PAGE -->
 
-    <!-- 2. REGISTER PAGE -->
-    <div id="registerPage" class="card hidden">
-        <h2>Tengeneza Akaunti</h2>
-        <select id="regRole">
-            <option value="student">Jisajili kama Mwanafunzi</option>
-            <option value="lecturer">Jisajili kama Mhadhiri</option>
-        </select>
-        <input id="regName" placeholder="Jina Kamili">
-        <input id="regEmail" placeholder="Barua Pepe (Email)">
-        <input id="regPass" type="password" placeholder="Nenosiri Jipya">
-        <button onclick="alert('Usajili umekamilika! Karibu SUA.'); showPage('loginPage')">Jisajili</button>
-        <button class="btn-outline" onclick="showPage('loginPage')">Rudi Kwenye Login</button>
-    </div>
+<div id="loginPage">
 
-    <!-- 3. FORGOT PASSWORD -->
-    <div id="forgotPage" class="card hidden">
-        <h2>Rejesha Nenosiri</h2>
-        <p style="font-size:13px; color:#666;">Weka email yako ili upate maelekezo.</p>
-        <input id="forgEmail" placeholder="Weka Email Yako">
-        <button onclick="alert('Tumetuma maelekezo kwenye email yako.'); showPage('loginPage')">Tuma Link</button>
-        <button class="btn-outline" onclick="showPage('loginPage')">Rudi Kwenye Login</button>
-    </div>
+<h2>Login</h2>
 
-    <!-- 4. LECTURER DASHBOARD -->
-    <div id="lecturerDashboard" class="card lecturer-card hidden">
-        <span class="badge" style="color:var(--blue)">LECTURER DASHBOARD</span>
-        <h2 id="lecWelcome">Habari, Mhadhiri</h2>
-        <hr>
-        <h4>Upload Material</h4>
-        <input type="text" id="docTitle" placeholder="Jina la File (e.g. Soil Biology)">
-        <select id="docType">
-            <option value="notes">Lecture Notes</option>
-            <option value="assign">Assignment</option>
-        </select>
-        <input type="file">
-        <button class="btn-blue" onclick="uploadData()">Pakia Kazi (Upload)</button>
-        <button class="btn-red" onclick="location.reload()">Logout</button>
-    </div>
+<input id="email" placeholder="Email"><br>
+<input id="password" type="password" placeholder="Password"><br>
 
-    <!-- 5. STUDENT DASHBOARD -->
-    <div id="studentDashboard" class="card student-card hidden">
-        <span class="badge" style="color:var(--sua-green)">STUDENT DASHBOARD</span>
-        <h2>Student Panel</h2>
-        <hr>
-        <div style="background:#f9f9f9; padding:10px; border-radius:8px; margin-bottom:10px;">
-            <strong>Soil Science Notes</strong><br>
-            <small>Uploaded by: Dr. Juma</small><br>
-            <button style="width:auto; padding:5px 10px; margin-top:5px; font-size:12px;">Download PDF</button>
-        </div>
-        <button class="btn-red" onclick="location.reload()">Logout</button>
-    </div>
+<button onclick="login()">Login</button>
+
+<p>Don't have an account?</p>
+<button onclick="showRegister()">Register</button>
 
 </div>
 
+
+<!-- REGISTER PAGE -->
+
+<div id="registerPage" class="hidden">
+
+<h2>Register</h2>
+
+<select id="role">
+<option value="">Register As</option>
+<option value="Student">Student</option>
+<option value="Lecturer">Lecturer</option>
+</select><br>
+
+<input id="regName" placeholder="Full Name"><br>
+<input id="regEmail" placeholder="Email"><br>
+<input id="regPassword" type="password" placeholder="Password"><br>
+
+<button onclick="register()">Register</button>
+
+<br><br>
+
+<button onclick="backLogin()">Back to Login</button>
+
+</div>
+
+
+<!-- DASHBOARD -->
+
+<div id="dashboard" class="hidden">
+
+<h2>Dashboard</h2>
+
+<button onclick="showNotes()">Lecture Notes</button>
+<button onclick="showAssignments()">Assignments</button>
+<button onclick="logout()">Logout</button>
+
+</div>
+
+
+<!-- NOTES -->
+
+<div id="notesPage" class="hidden">
+
+<h2>Lecture Notes</h2>
+
+<div class="card">
+<h3>Introduction to Agriculture</h3>
+<button>Download PDF</button>
+</div>
+
+<div class="card">
+<h3>Soil Science</h3>
+<button>Download PDF</button>
+</div>
+
+<div class="card">
+<h3>Crop Production</h3>
+<button>Download PDF</button>
+</div>
+
+<button onclick="backDashboard()">Back</button>
+
+</div>
+
+
+<!-- ASSIGNMENTS -->
+
+<div id="assignmentPage" class="hidden">
+
+<h2>Assignments</h2>
+
+<div class="card">
+
+<h3>Assignment 1</h3>
+
+<p>Topic: Soil Fertility</p>
+<p>Deadline: 20 March</p>
+
+<input type="file">
+
+<button onclick="submitAssignment()">Submit</button>
+
+</div>
+
+<button onclick="backDashboard()">Back</button>
+
+</div>
+
+</div>
+
+
 <script>
-    function showPage(pageId) {
-        const pages = ['loginPage', 'registerPage', 'forgotPage', 'lecturerDashboard', 'studentDashboard'];
-        pages.forEach(p => document.getElementById(p).classList.add('hidden'));
-        document.getElementById(pageId).classList.remove('hidden');
-    }
 
-    function handleLogin() {
-        let role = document.getElementById("loginRole").value;
-        let email = document.getElementById("loginEmail").value;
+function login(){
 
-        if(email === "") { alert("Tafadhali jaza taarifa zako!"); return; }
+let email=document.getElementById("email").value
+let password=document.getElementById("password").value
 
-        if(role === "lecturer") {
-            showPage('lecturerDashboard');
-            document.getElementById("lecWelcome").innerText = "Habari, " + email;
-            document.getElementById("topStatus").innerText = "Lecturer Portal Active";
-        } else {
-            showPage('studentDashboard');
-            document.getElementById("topStatus").innerText = "Student Portal Active";
-        }
-    }
+if(email!="" && password!=""){
 
-    function uploadData() {
-        let title = document.getElementById("docTitle").value;
-        if(title === "") { alert("Weka jina la file!"); return; }
-        alert("Imefanikiwa! " + title + " sasa inaonekana kwa wanafunzi.");
-    }
+document.getElementById("loginPage").classList.add("hidden")
+document.getElementById("dashboard").classList.remove("hidden")
+
+}else{
+
+alert("Please enter email and password")
+
+}
+
+}
+
+
+function showRegister(){
+
+document.getElementById("loginPage").classList.add("hidden")
+document.getElementById("registerPage").classList.remove("hidden")
+
+}
+
+
+function backLogin(){
+
+document.getElementById("registerPage").classList.add("hidden")
+document.getElementById("loginPage").classList.remove("hidden")
+
+}
+
+
+function register(){
+
+let role=document.getElementById("role").value
+let name=document.getElementById("regName").value
+let email=document.getElementById("regEmail").value
+let password=document.getElementById("regPassword").value
+
+if(role!="" && name!="" && email!="" && password!=""){
+
+alert(role + " registered successfully")
+
+backLogin()
+
+}else{
+
+alert("Please fill all fields")
+
+}
+
+}
+
+
+function logout(){
+
+location.reload()
+
+}
+
+
+function showNotes(){
+
+document.getElementById("dashboard").classList.add("hidden")
+document.getElementById("notesPage").classList.remove("hidden")
+
+}
+
+
+function showAssignments(){
+
+document.getElementById("dashboard").classList.add("hidden")
+document.getElementById("assignmentPage").classList.remove("hidden")
+
+}
+
+
+function backDashboard(){
+
+document.getElementById("notesPage").classList.add("hidden")
+document.getElementById("assignmentPage").classList.add("hidden")
+document.getElementById("dashboard").classList.remove("hidden")
+
+}
+
+
+function submitAssignment(){
+
+alert("Assignment Submitted Successfully")
+
+}
+
 </script>
 
 </body>
